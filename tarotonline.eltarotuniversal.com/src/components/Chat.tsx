@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { ChatMessage, TarotCard } from '../types/tarot';
+import { majorArcana } from '../data/majorArcana'; // Importa las cartas
 import { MessageSquare, Send } from 'lucide-react';
 
 interface Props {
@@ -31,15 +32,30 @@ export const Chat: React.FC<Props> = ({ selectedCards, onCallRequest }) => {
     setMessages([...messages, newMessage]);
     
     // Simular respuesta del tarotista
-    setTimeout(() => {
+    // Llamada a la API de DeepSek
+    try {
+      const response = await fetch('https://api.deepsek.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer sk-1e0a6f7254bd4608ab3a26ed78e2c7c3'
+        },
+        body: JSON.stringify({ message: content, selectedCards })
+      });
+
+      const data = await response.json();
+
       const tarotistResponse: ChatMessage = {
         id: (Date.now() + 1).toString(),
         sender: 'tarotist',
-        content: `Observo que las cartas ${selectedCards.map(card => card.name).join(', ')} están revelando una situación compleja en tu vida. Percibo una energía bloqueada que podría estar relacionada con un mal de ojo. ¿Te gustaría profundizar en una consulta personalizada para explorar mejor tu situación?`,
+        content: data.response, // Ajusta esto según la estructura de la respuesta de la API
         timestamp: new Date()
       };
+
       setMessages(prev => [...prev, tarotistResponse]);
-    }, 1500);
+    } catch (error) {
+      console.error('Error al llamar a la API de DeepSek:', error);
+    }
 
     setInput('');
   };
