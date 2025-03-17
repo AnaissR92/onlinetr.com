@@ -130,5 +130,11 @@ export const majorArcana = [
     name: "El Mundo",
     image: "tarot-cards/el-mundo.png",
     description: "Completitud, logro, integración. El final de un ciclo y realización."
+  },
+  {
+    id: 22,
+    name: "El Mundo",
+    image: "tarot-cards/el-mundo.png",
+    description: "Completitud, logro, integración. El final de un ciclo y realización."
   }
 ];
