@@ -127,9 +127,8 @@ export const Chat: React.FC<Props> = ({ selectedCards, onCallRequest }) => {
         </div>
         
         <button
-          onClick={onCallRequest}
-          className="mt-4 w-full py-2 px-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-md hover:from-purple-600 hover:to-pink-600 transition-colors flex items-center justify-center gap-2"
-        >
+          
+          
           <MessageSquare size={20} />
           Consulta Personalizada con Tarotista
         </button>
