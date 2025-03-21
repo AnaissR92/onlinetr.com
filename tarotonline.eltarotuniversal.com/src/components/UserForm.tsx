@@ -74,12 +74,40 @@ export const UserForm: React.FC<Props> = ({ onSubmit }) => {
           {errors.question && <span className="text-red-400 text-sm">{errors.question.message}</span>}
         </div>
 
-        <button
-          type="submit"
-          className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-colors"
-        >
-          Continuar con la Lectura
-        </button>
+        import { useState } from "react";
+
+export default function ApiButton() {
+  const [loading, setLoading] = useState(false);
+
+  const handleClick = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch(
+        "https://pro77.meetip.net/crm2rest/v2/rest.php?auhtorization=we5VpHHxMvYKy5yTqwaqi5D5Xweg4jRxHcx7&agente=10&accion=llamada",
+        { method: "GET" }
+      );
+      const data = await response.json();
+      console.log("Respuesta de la API:", data);
+      alert("Llamada realizada con éxito");
+    } catch (error) {
+      console.error("Error al llamar a la API:", error);
+      alert("Hubo un error al conectar con la API");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <button
+      type="button"
+      onClick={handleClick}
+      className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-colors"
+      disabled={loading}
+    >
+      {loading ? "Cargando..." : "Recibir llamada}
+    </button>
+  );
+}
       </div>
     </form>
   );
